@@ -12,6 +12,7 @@ Group: System/Base
 URL: http://www.redhat.com/
 Source0: %{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRequires: libglade2.0-devel
 BuildRequires: gnomeui2-devel >= %{libgnomeui_version}
 BuildRequires: krb5-devel >= %{krb5_version}
 BuildRequires: dbus-devel >= %{dbus_version}
