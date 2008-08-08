@@ -6,7 +6,7 @@
 Summary: Kerberos 5 authentication dialog
 Name: krb5-auth-dialog
 Version: 0.7
-Release: %mkrel 7.1
+Release: %mkrel 2.1
 License: GPLv2+
 Group: System/Base
 URL: http://www.redhat.com/
