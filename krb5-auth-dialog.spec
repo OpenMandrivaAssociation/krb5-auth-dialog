@@ -5,26 +5,28 @@
 
 Summary: Kerberos 5 authentication dialog
 Name: krb5-auth-dialog
-Version: 0.7
-Release: %mkrel 2.1
+Version: 0.8
+Release: %mkrel 1
 License: GPLv2+
 Group: System/Base
 URL: http://www.redhat.com/
-Source0: %{name}-%{version}.tar.bz2
+Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRequires: libcap-devel
 BuildRequires: libglade2.0-devel
+BuildRequires: libnotify-devel
 BuildRequires: gnomeui2-devel >= %{libgnomeui_version}
 BuildRequires: krb5-devel >= %{krb5_version}
 BuildRequires: dbus-devel >= %{dbus_version}
-BuildRequires: perl-XML-Parser, gettext
+BuildRequires: intltool
 %ifnarch s390 s390x
 BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
 %endif
 #Requires: libgnomeui >= %{libgnomeui_version}
 Requires: krb5-libs >= %{krb5_version}
-
-Patch1: krb5-auth-dialog-0.7-sm-disable.patch
-Patch2: desktop-file-comment.patch
+Patch:  krb5-auth-dialog-0.8-format-strings.patch
+Patch1: krb5-auth-dialog-0.8-sm-disable.patch
+Patch3: krb5-auth-dialog-0.8-fix-linking.patch
 
 %description
 This package contains a dialog that warns the user when their Kerberos
@@ -32,8 +34,11 @@ tickets are about to expire and lets them renew them.
 
 %prep
 %setup -q
+%patch -p1
 %patch1 -p1 -b .sm-disable
-%patch2 -p1 -b .comment
+%patch3 -p1
+autoreconf
+rm -f etpo/lexer.c
 
 %build
 %configure2_5x
@@ -47,10 +52,24 @@ tickets are about to expire and lets them renew them.
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
 
+%if %mdkversion < 200900
+%post
+%post_install_gconf_schemas %name
+%update_icon_cache hicolor
+%postun
+%clean_scrollkeeper
+%clean_icon_cache hicolor
+%endif
+
+%preun
+%preun_uninstall_gconf_schemas %name
+
 
 %files -f %name.lang
 %defattr(-,root,root,-)
-%doc
+%doc README AUTHORS
+%_sysconfdir/gconf/schemas/%name.schemas
+%_datadir/icons/hicolor/*/apps/*
 %{_bindir}/krb5-auth-dialog
 %{_datadir}/krb5-auth-dialog/
 %{_mandir}/man1/*
