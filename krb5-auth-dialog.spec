@@ -6,7 +6,7 @@
 Summary: Kerberos 5 authentication dialog
 Name: krb5-auth-dialog
 Version: 0.8
-Release: %mkrel 1
+Release: %mkrel 2
 License: GPLv2+
 Group: System/Base
 URL: http://www.redhat.com/
@@ -24,7 +24,6 @@ BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
 #Requires: libgnomeui >= %{libgnomeui_version}
 Requires: krb5-libs >= %{krb5_version}
 Patch:  krb5-auth-dialog-0.8-format-strings.patch
-Patch1: krb5-auth-dialog-0.8-sm-disable.patch
 Patch3: krb5-auth-dialog-0.8-fix-linking.patch
 
 %description
@@ -34,7 +33,6 @@ tickets are about to expire and lets them renew them.
 %prep
 %setup -q
 %patch -p1
-%patch1 -p1 -b .sm-disable
 %patch3 -p1
 autoreconf
 rm -f etpo/lexer.c
