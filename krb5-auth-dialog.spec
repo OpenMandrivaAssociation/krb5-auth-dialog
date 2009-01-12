@@ -19,9 +19,8 @@ BuildRequires: gnomeui2-devel >= %{libgnomeui_version}
 BuildRequires: krb5-devel >= %{krb5_version}
 BuildRequires: dbus-devel >= %{dbus_version}
 BuildRequires: intltool
-%ifnarch s390 s390x
+BuildRequires: flex
 BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
-%endif
 #Requires: libgnomeui >= %{libgnomeui_version}
 Requires: krb5-libs >= %{krb5_version}
 Patch:  krb5-auth-dialog-0.8-format-strings.patch
