@@ -5,8 +5,8 @@
 
 Summary: Kerberos 5 authentication dialog
 Name: krb5-auth-dialog
-Version: 0.8
-Release: %mkrel 2
+Version: 0.9
+Release: %mkrel 1
 License: GPLv2+
 Group: System/Base
 URL: http://www.redhat.com/
@@ -18,13 +18,16 @@ BuildRequires: libnotify-devel
 BuildRequires: gnomeui2-devel >= %{libgnomeui_version}
 BuildRequires: krb5-devel >= %{krb5_version}
 BuildRequires: dbus-devel >= %{dbus_version}
+BuildRequires: dbus-glib-devel
 BuildRequires: intltool
 BuildRequires: flex
 BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
 #Requires: libgnomeui >= %{libgnomeui_version}
 Requires: krb5-libs >= %{krb5_version}
-Patch:  krb5-auth-dialog-0.8-format-strings.patch
-Patch3: krb5-auth-dialog-0.8-fix-linking.patch
+Patch:  krb5-auth-dialog-0.9-format-strings.patch
+# http://bugzilla.gnome.org/show_bug.cgi?id=580789
+Patch1: krb5-auth-dialog-0.9-missing.patch
+Patch3: krb5-auth-dialog-0.9-fix-linking.patch
 
 %description
 This package contains a dialog that warns the user when their Kerberos
@@ -33,8 +36,9 @@ tickets are about to expire and lets them renew them.
 %prep
 %setup -q
 %patch -p1
-%patch3 -p1
-autoreconf
+%patch1 -p1
+%patch3 -p1 -b .fix-linking
+autoreconf -fi
 rm -f etpo/lexer.c
 
 %build
@@ -52,10 +56,8 @@ rm -f etpo/lexer.c
 %if %mdkversion < 200900
 %post
 %post_install_gconf_schemas %name
-%update_icon_cache hicolor
 %postun
 %clean_scrollkeeper
-%clean_icon_cache hicolor
 %endif
 
 %preun
@@ -66,10 +68,11 @@ rm -f etpo/lexer.c
 %defattr(-,root,root,-)
 %doc README AUTHORS
 %_sysconfdir/gconf/schemas/%name.schemas
-%_datadir/icons/hicolor/*/apps/*
 %{_bindir}/krb5-auth-dialog
+%{_bindir}/krb5-auth-dialog-preferences
 %{_datadir}/krb5-auth-dialog/
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/krb5-auth-dialog.desktop
-
+%_datadir/applications/krb5-auth-dialog-preferences.desktop
+%_datadir/dbus-1/services/org.gnome.KrbAuthDialog.service
 
