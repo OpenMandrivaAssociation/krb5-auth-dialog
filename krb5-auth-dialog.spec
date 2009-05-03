@@ -5,7 +5,7 @@
 
 Summary: Kerberos 5 authentication dialog
 Name: krb5-auth-dialog
-Version: 0.9
+Version: 0.9.1
 Release: %mkrel 1
 License: GPLv2+
 Group: System/Base
@@ -25,8 +25,6 @@ BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
 #Requires: libgnomeui >= %{libgnomeui_version}
 Requires: krb5-libs >= %{krb5_version}
 Patch:  krb5-auth-dialog-0.9-format-strings.patch
-# http://bugzilla.gnome.org/show_bug.cgi?id=580789
-Patch1: krb5-auth-dialog-0.9-missing.patch
 Patch3: krb5-auth-dialog-0.9-fix-linking.patch
 
 %description
@@ -36,7 +34,6 @@ tickets are about to expire and lets them renew them.
 %prep
 %setup -q
 %patch -p1
-%patch1 -p1
 %patch3 -p1 -b .fix-linking
 autoreconf -fi
 rm -f etpo/lexer.c
