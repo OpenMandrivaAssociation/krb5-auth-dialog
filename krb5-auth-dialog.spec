@@ -1,4 +1,3 @@
-%define libgnomeui_version 2.9.1
 %define krb5_version 1.4
 %define libnm_version 0.5
 %define dbus_version 0.90
@@ -13,16 +12,15 @@ URL: http://www.redhat.com/
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libcap-devel
-BuildRequires: libglade2.0-devel
 BuildRequires: libnotify-devel
-BuildRequires: gnomeui2-devel >= %{libgnomeui_version}
+BuildRequires: gtk+2-devel >= 2.16.0
+BuildRequires: libGConf2-devel
 BuildRequires: krb5-devel >= %{krb5_version}
 BuildRequires: dbus-devel >= %{dbus_version}
 BuildRequires: dbus-glib-devel
 BuildRequires: intltool
 BuildRequires: flex
 BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
-#Requires: libgnomeui >= %{libgnomeui_version}
 Requires: krb5-libs >= %{krb5_version}
 
 %description
