@@ -4,7 +4,7 @@
 
 Summary: Kerberos 5 authentication dialog
 Name: krb5-auth-dialog
-Version: 0.10
+Version: 0.11
 Release: %mkrel 1
 License: GPLv2+
 Group: System/Base
@@ -19,6 +19,7 @@ BuildRequires: krb5-devel >= %{krb5_version}
 BuildRequires: dbus-devel >= %{dbus_version}
 BuildRequires: dbus-glib-devel
 BuildRequires: intltool
+BuildRequires: gnome-doc-utils
 BuildRequires: flex
 BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
 Requires: krb5-libs >= %{krb5_version}
@@ -37,7 +38,10 @@ tickets are about to expire and lets them renew them.
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
 %makeinstall_std
-%find_lang %name
+%find_lang %name --with-gnome
+for omf in %buildroot%_datadir/omf/*/*[_-]??.omf;do 
+echo "%lang($(basename $omf|sed -e s/.*-// -e s/.omf//)) $(echo $omf|sed -e s!%buildroot!!)" >> %name.lang
+done
 
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
@@ -45,8 +49,10 @@ tickets are about to expire and lets them renew them.
 %if %mdkversion < 200900
 %post
 %post_install_gconf_schemas %name
+%update_icon_cache hicolor
 %postun
 %clean_scrollkeeper
+%clean_icon_cache hicolor
 %endif
 
 %preun
@@ -60,6 +66,9 @@ tickets are about to expire and lets them renew them.
 %{_bindir}/krb5-auth-dialog
 %{_bindir}/krb5-auth-dialog-preferences
 %{_datadir}/krb5-auth-dialog/
+%_datadir/icons/hicolor/*/status/*
+%dir %_datadir/omf/%name
+%_datadir/omf/%name/%name-C.omf
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/krb5-auth-dialog.desktop
 %_datadir/applications/krb5-auth-dialog-preferences.desktop
