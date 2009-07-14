@@ -61,7 +61,7 @@ done
 
 %files -f %name.lang
 %defattr(-,root,root,-)
-%doc README AUTHORS
+%doc README AUTHORS NEWS
 %_sysconfdir/gconf/schemas/%name.schemas
 %{_bindir}/krb5-auth-dialog
 %{_bindir}/krb5-auth-dialog-preferences
