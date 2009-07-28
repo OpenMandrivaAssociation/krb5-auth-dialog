@@ -5,7 +5,7 @@
 Summary: Kerberos 5 authentication dialog
 Name: krb5-auth-dialog
 Version: 0.12
-Release: %mkrel 1
+Release: %mkrel 2
 License: GPLv2+
 Group: System/Base
 URL: http://www.redhat.com/
@@ -21,7 +21,7 @@ BuildRequires: dbus-glib-devel
 BuildRequires: intltool
 BuildRequires: gnome-doc-utils
 BuildRequires: flex
-BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
+#BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
 Requires: krb5-libs >= %{krb5_version}
 
 %description
