@@ -5,11 +5,14 @@
 Summary: Kerberos 5 authentication dialog
 Name: krb5-auth-dialog
 Version: 0.12
-Release: %mkrel 2
+Release: %mkrel 3
 License: GPLv2+
 Group: System/Base
 URL: http://www.redhat.com/
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
+#gw fix crash in preferences
+#http://bugzilla.gnome.org/show_bug.cgi?id=593389
+Patch: krb5-auth-dialog-0.12-fix-preferences-crash.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libcap-devel
 BuildRequires: libnotify-devel
@@ -30,6 +33,7 @@ tickets are about to expire and lets them renew them.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %configure2_5x
