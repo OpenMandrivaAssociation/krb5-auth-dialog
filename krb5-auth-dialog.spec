@@ -1,10 +1,12 @@
 %define krb5_version 1.4
 %define libnm_version 0.5
 %define dbus_version 0.90
+%define build_heimdal 0
+%{?_with_heimdal: %{expand: %%global build_heimdal 1}}
 
 Summary: Kerberos 5 authentication dialog
 Name: krb5-auth-dialog
-Version: 0.15
+Version: 0.16
 Release: %mkrel 1
 License: GPLv2+
 Group: System/Base
@@ -15,14 +17,18 @@ BuildRequires: libcap-devel
 BuildRequires: libnotify-devel
 BuildRequires: gtk+2-devel >= 2.16.0
 BuildRequires: libGConf2-devel
+%if %build_heimdal
+BuildRequires: heimdal-devel
+%else
 BuildRequires: krb5-devel >= %{krb5_version}
+Requires: krb5-libs >= %{krb5_version}
+%endif
 BuildRequires: dbus-devel >= %{dbus_version}
 BuildRequires: dbus-glib-devel
 BuildRequires: intltool
 BuildRequires: gnome-doc-utils
 BuildRequires: flex
 #BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
-Requires: krb5-libs >= %{krb5_version}
 
 %description
 This package contains a dialog that warns the user when their Kerberos
@@ -32,7 +38,7 @@ tickets are about to expire and lets them renew them.
 %setup -q
 
 %build
-%configure2_5x
+%configure2_5x --enable-debug --disable-static
 %make
 
 %install
@@ -65,6 +71,10 @@ done
 %_sysconfdir/gconf/schemas/%name.schemas
 %{_bindir}/krb5-auth-dialog
 %{_bindir}/krb5-auth-dialog-preferences
+%dir %_libdir/%name
+%dir %_libdir/%name/plugins
+%_libdir/%name/plugins/libka-plugin-dummy.*
+%_libdir/%name/plugins/libka-plugin-pam.*
 %{_datadir}/krb5-auth-dialog/
 %_datadir/icons/hicolor/*/status/*
 %dir %_datadir/omf/%name
