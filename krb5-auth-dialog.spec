@@ -25,6 +25,7 @@ Requires: krb5-libs >= %{krb5_version}
 %endif
 BuildRequires: dbus-devel >= %{dbus_version}
 BuildRequires: dbus-glib-devel
+BuildRequires: pam-devel
 BuildRequires: intltool
 BuildRequires: gnome-doc-utils
 BuildRequires: flex
