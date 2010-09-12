@@ -6,7 +6,7 @@
 
 Summary: Kerberos 5 authentication dialog
 Name: krb5-auth-dialog
-Version: 0.16
+Version: 0.17
 Release: %mkrel 1
 License: GPLv2+
 Group: System/Base
@@ -74,6 +74,7 @@ done
 %{_bindir}/krb5-auth-dialog-preferences
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
+%_libdir/%name/plugins/libka-plugin-afs.*
 %_libdir/%name/plugins/libka-plugin-dummy.*
 %_libdir/%name/plugins/libka-plugin-pam.*
 %{_datadir}/krb5-auth-dialog/
