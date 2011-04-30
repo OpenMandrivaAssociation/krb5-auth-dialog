@@ -12,11 +12,13 @@ License: GPLv2+
 Group: System/Base
 URL: http://www.redhat.com/
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
+Patch0: krb5-auth-dialog-0.17-libnotify.patch
+Patch1: krb5-auth-dialog-0.17-link.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libcap-devel
 BuildRequires: libnotify-devel
 BuildRequires: gtk+2-devel >= 2.16.0
-BuildRequires: libGConf2-devel
+BuildRequires: libGConf2-devel GConf2
 %if %build_heimdal
 BuildRequires: heimdal-devel
 %else
@@ -29,7 +31,7 @@ BuildRequires: pam-devel
 BuildRequires: intltool
 BuildRequires: gnome-doc-utils
 BuildRequires: flex
-#BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
+BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
 
 %description
 This package contains a dialog that warns the user when their Kerberos
@@ -37,6 +39,8 @@ tickets are about to expire and lets them renew them.
 
 %prep
 %setup -q
+%patch0 -p0
+%patch1 -p0
 
 %build
 %configure2_5x --enable-debug --disable-static
