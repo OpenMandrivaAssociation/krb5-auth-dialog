@@ -1,37 +1,32 @@
-%define krb5_version 1.4
-%define libnm_version 0.5
-%define dbus_version 0.90
 %define build_heimdal 0
 %{?_with_heimdal: %{expand: %%global build_heimdal 1}}
 
-Summary: Kerberos 5 authentication dialog
-Name: krb5-auth-dialog
-Version: 0.17
-Release: %mkrel 3
-License: GPLv2+
-Group: System/Base
-URL: http://www.redhat.com/
-Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
-Patch0: krb5-auth-dialog-0.17-libnotify.patch
-Patch1: krb5-auth-dialog-0.17-link.patch
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+Summary:	Kerberos 5 authentication dialog
+Name:		krb5-auth-dialog
+Version:	3.2.1
+Release:	1
+License:	GPLv2+
+Group:		System/Base
+URL:		http://www.redhat.com/
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.bz2
+
+BuildRequires: flex
+BuildRequires: GConf2
+BuildRequires: gnome-doc-utils
+BuildRequires: intltool
 BuildRequires: libcap-devel
-BuildRequires: libnotify-devel
-BuildRequires: gtk+2-devel >= 2.16.0
-BuildRequires: libGConf2-devel GConf2
+BuildRequires: pam-devel
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(gconf-2.0)
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(libnm-glib)
+BuildRequires: pkgconfig(libnotify)
 %if %build_heimdal
 BuildRequires: heimdal-devel
 %else
-BuildRequires: krb5-devel >= %{krb5_version}
-Requires: krb5-libs >= %{krb5_version}
+BuildRequires: krb5-devel
 %endif
-BuildRequires: dbus-devel >= %{dbus_version}
-BuildRequires: dbus-glib-devel
-BuildRequires: pam-devel
-BuildRequires: intltool
-BuildRequires: gnome-doc-utils
-BuildRequires: flex
-BuildRequires: NetworkManager-glib-devel >= %{libnm_version}
 
 %description
 This package contains a dialog that warns the user when their Kerberos
@@ -39,54 +34,32 @@ tickets are about to expire and lets them renew them.
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p0
 
 %build
-%configure2_5x --enable-debug --disable-static
+%configure2_5x \
+	--enable-debug \
+	--disable-static
 %make
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall_std
-%find_lang %name --with-gnome
-for omf in %buildroot%_datadir/omf/*/*[_-]??.omf;do 
-echo "%lang($(basename $omf|sed -e s/.*-// -e s/.omf//)) $(echo $omf|sed -e s!%buildroot!!)" >> %name.lang
-done
+%find_lang %{name} --with-gnome
 
-%clean
-%{__rm} -rf $RPM_BUILD_ROOT
-
-%if %mdkversion < 200900
-%post
-%post_install_gconf_schemas %name
-%update_icon_cache hicolor
-%postun
-%clean_scrollkeeper
-%clean_icon_cache hicolor
-%endif
-
-%preun
-%preun_uninstall_gconf_schemas %name
-
-
-%files -f %name.lang
-%defattr(-,root,root,-)
+%files -f %{name}.lang
 %doc README AUTHORS NEWS
-%_sysconfdir/gconf/schemas/%name.schemas
+%{_sysconfdir}/gconf/schemas/%{name}.schemas
 %{_bindir}/krb5-auth-dialog
 %{_bindir}/krb5-auth-dialog-preferences
-%dir %_libdir/%name
-%dir %_libdir/%name/plugins
-%_libdir/%name/plugins/libka-plugin-afs.*
-%_libdir/%name/plugins/libka-plugin-dummy.*
-%_libdir/%name/plugins/libka-plugin-pam.*
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/plugins
+%{_libdir}/%{name}/plugins/libka-plugin-afs.*
+%{_libdir}/%{name}/plugins/libka-plugin-dummy.*
+%{_libdir}/%{name}/plugins/libka-plugin-pam.*
 %{_datadir}/krb5-auth-dialog/
-%_datadir/icons/hicolor/*/status/*
-%dir %_datadir/omf/%name
-%_datadir/omf/%name/%name-C.omf
+%{_datadir}/icons/hicolor/*/status/*
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/krb5-auth-dialog.desktop
-%_datadir/applications/krb5-auth-dialog-preferences.desktop
-%_datadir/dbus-1/services/org.gnome.KrbAuthDialog.service
+%{_datadir}/applications/krb5-auth-dialog-preferences.desktop
+%{_datadir}/dbus-1/services/org.gnome.KrbAuthDialog.service
 
