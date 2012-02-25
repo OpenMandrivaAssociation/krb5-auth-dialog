@@ -50,7 +50,6 @@ rm -rf %{buildroot}
 %doc README AUTHORS NEWS
 %{_sysconfdir}/gconf/schemas/%{name}.schemas
 %{_bindir}/krb5-auth-dialog
-#{_bindir}/krb5-auth-dialog-preferences
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
 %{_libdir}/%{name}/plugins/libka-plugin-afs.*
@@ -60,6 +59,6 @@ rm -rf %{buildroot}
 %{_datadir}/icons/hicolor/*/status/*
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/krb5-auth-dialog.desktop
-#{_datadir}/applications/krb5-auth-dialog-preferences.desktop
+%{_datadir}/applications/krb5-auth-dialog.desktop
 %{_datadir}/dbus-1/services/org.gnome.KrbAuthDialog.service
 
