@@ -42,22 +42,22 @@ tickets are about to expire and lets them renew them.
 %configure2_5x \
 	--enable-debug \
 	--disable-static
-%make
+%make_uild
 
 %install
-%makeinstall_std
+%make_install
 %find_lang %{name} --with-gnome
 
 %files -f %{name}.lang
 %doc README AUTHORS NEWS
-%{_sysconfdir}/gconf/schemas/%{name}.schemas
+#{_sysconfdir}/gconf/schemas/%{name}.schemas
 %{_bindir}/krb5-auth-dialog
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
 %{_libdir}/%{name}/plugins/libka-plugin-afs.*
 %{_libdir}/%{name}/plugins/libka-plugin-dummy.*
 %{_libdir}/%{name}/plugins/libka-plugin-pam.*
-%{_datadir}/krb5-auth-dialog/
+#{_datadir}/krb5-auth-dialog/
 %{_datadir}/icons/hicolor/*/status/*
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/krb5-auth-dialog.desktop
