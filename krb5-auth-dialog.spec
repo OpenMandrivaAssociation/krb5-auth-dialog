@@ -3,13 +3,14 @@
 
 Summary:	Kerberos 5 authentication dialog
 Name:		krb5-auth-dialog
-Version:	3.2.1
-Release:	2
+Version:	3.26.1
+Release:	1
 License:	GPLv2+
 Group:		System/Base
 URL:		http://www.redhat.com/
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
 
+BuildRequires: itstool
 BuildRequires: flex
 BuildRequires: bison
 BuildRequires: GConf2
@@ -41,23 +42,27 @@ tickets are about to expire and lets them renew them.
 %configure2_5x \
 	--enable-debug \
 	--disable-static
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 %find_lang %{name} --with-gnome
 
 %files -f %{name}.lang
 %doc README AUTHORS NEWS
-%{_sysconfdir}/gconf/schemas/%{name}.schemas
+#{_sysconfdir}/gconf/schemas/%{name}.schemas
 %{_bindir}/krb5-auth-dialog
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
 %{_libdir}/%{name}/plugins/libka-plugin-afs.*
 %{_libdir}/%{name}/plugins/libka-plugin-dummy.*
 %{_libdir}/%{name}/plugins/libka-plugin-pam.*
-%{_datadir}/krb5-auth-dialog/
+%{_libdir}/%{name}/plugins/libka-plugin-gnomelock.so
+#{_datadir}/krb5-auth-dialog/
 %{_datadir}/icons/hicolor/*/status/*
+%{_datadir}/GConf/gsettings/org.gnome.KrbAuthDialog.convert
+%{_datadir}/appdata/krb5-auth-dialog.appdata.xml
+%{_datadir}/glib-2.0/schemas/org.gnome.KrbAuthDialog.gschema.xml
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/krb5-auth-dialog.desktop
 %{_datadir}/applications/krb5-auth-dialog.desktop
