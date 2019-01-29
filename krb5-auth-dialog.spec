@@ -42,7 +42,7 @@ tickets are about to expire and lets them renew them.
 %configure2_5x \
 	--enable-debug \
 	--disable-static
-%make_uild
+%make_build
 
 %install
 %make_install
