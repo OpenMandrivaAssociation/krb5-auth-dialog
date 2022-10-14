@@ -3,14 +3,14 @@
 
 Summary:	Kerberos 5 authentication dialog
 Name:		krb5-auth-dialog
-Version:	3.26.1
+Version:	43.0
 Release:	1
 License:	GPLv2+
 Group:		System/Base
 URL:		http://www.redhat.com/
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
 
-BuildRequires: itstool
+BuildRequires: meson
 BuildRequires: flex
 BuildRequires: bison
 BuildRequires: GConf2
@@ -39,13 +39,11 @@ tickets are about to expire and lets them renew them.
 %setup -q
 
 %build
-%configure2_5x \
-	--enable-debug \
-	--disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%make_install
+%meson_install
 %find_lang %{name} --with-gnome
 
 %files -f %{name}.lang
