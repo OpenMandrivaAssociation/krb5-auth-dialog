@@ -22,7 +22,7 @@ BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: pkgconfig(gconf-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: pkgconfig(libnm-glib)
+#BuildRequires: pkgconfig(libnm-glib)
 BuildRequires: pkgconfig(libnotify)
 %if %build_heimdal
 BuildRequires: heimdal-devel
