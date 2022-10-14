@@ -24,6 +24,7 @@ BuildRequires: pkgconfig(gconf-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
 #BuildRequires: pkgconfig(libnm-glib)
 BuildRequires: pkgconfig(libnotify)
+BuildRequires: pkgconfig(gcr-3)
 %if %build_heimdal
 BuildRequires: heimdal-devel
 %else
