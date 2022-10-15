@@ -1,5 +1,7 @@
 %define build_heimdal 0
-%{?_with_heimdal: %{expand: %%global build_heimdal 1}}
+%{?_with_heimdal: %{expand: %%global build_heimdal 1
+
+%define _disable_ld_no_undefined 1
 
 Summary:	Kerberos 5 authentication dialog
 Name:		krb5-auth-dialog
