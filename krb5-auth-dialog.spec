@@ -1,15 +1,18 @@
 %define build_heimdal 0
 %{?_with_heimdal: %{expand: %%global build_heimdal 1}}
 
+%define _disable_ld_no_undefined 1
+
 Summary:	Kerberos 5 authentication dialog
 Name:		krb5-auth-dialog
-Version:	3.26.1
+Version:	43.0
 Release:	1
 License:	GPLv2+
 Group:		System/Base
 URL:		http://www.redhat.com/
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
 
+BuildRequires: meson
 BuildRequires: itstool
 BuildRequires: flex
 BuildRequires: bison
@@ -22,8 +25,9 @@ BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: pkgconfig(gconf-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: pkgconfig(libnm-glib)
+#BuildRequires: pkgconfig(libnm-glib)
 BuildRequires: pkgconfig(libnotify)
+BuildRequires: pkgconfig(gcr-3)
 %if %build_heimdal
 BuildRequires: heimdal-devel
 %else
@@ -39,18 +43,15 @@ tickets are about to expire and lets them renew them.
 %setup -q
 
 %build
-%configure2_5x \
-	--enable-debug \
-	--disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%make_install
+%meson_install
 %find_lang %{name} --with-gnome
 
 %files -f %{name}.lang
-%doc README AUTHORS NEWS
-#{_sysconfdir}/gconf/schemas/%{name}.schemas
+%doc README* AUTHORS NEWS
 %{_bindir}/krb5-auth-dialog
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
@@ -58,14 +59,12 @@ tickets are about to expire and lets them renew them.
 %{_libdir}/%{name}/plugins/libka-plugin-dummy.*
 %{_libdir}/%{name}/plugins/libka-plugin-pam.*
 %{_libdir}/%{name}/plugins/libka-plugin-gnomelock.so
-#{_datadir}/krb5-auth-dialog/
 %{_datadir}/icons/hicolor/*/status/*
-%{_datadir}/GConf/gsettings/org.gnome.KrbAuthDialog.convert
-%{_datadir}/appdata/krb5-auth-dialog.appdata.xml
+%{_datadir}/metainfo/krb5-auth-dialog.metainfo.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.KrbAuthDialog.gschema.xml
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/krb5-auth-dialog.desktop
-%{_datadir}/applications/krb5-auth-dialog.desktop
+%{_datadir}/applications/org.gnome.KrbAuthDialog.desktop
 %{_datadir}/dbus-1/services/org.gnome.KrbAuthDialog.service
 
 
