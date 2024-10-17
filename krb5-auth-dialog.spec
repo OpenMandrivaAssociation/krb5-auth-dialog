@@ -9,7 +9,7 @@ Version:	43.0
 Release:	1
 License:	GPLv2+
 Group:		System/Base
-URL:		http://www.redhat.com/
+URL:		https://www.redhat.com/
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
 
 BuildRequires: meson
