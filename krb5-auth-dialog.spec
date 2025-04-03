@@ -5,7 +5,7 @@
 
 Summary:	Kerberos 5 authentication dialog
 Name:		krb5-auth-dialog
-Version:	44.0.alpha.1
+Version:	44.0.alpha1
 Release:	1
 License:	GPLv2+
 Group:		System/Base
