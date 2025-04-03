@@ -61,7 +61,7 @@ tickets are about to expire and lets them renew them.
 %{_libdir}/%{name}/plugins/libka-plugin-pam.*
 %{_libdir}/%{name}/plugins/libka-plugin-gnomelock.so
 %{_datadir}/icons/hicolor/*/status/*
-#{_datadir}/metainfo/krb5-auth-dialog.metainfo.xml
+%{_datadir}/metainfo/org.gnome.KrbAuthDialog.metainfo.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.KrbAuthDialog.gschema.xml
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/krb5-auth-dialog.desktop
