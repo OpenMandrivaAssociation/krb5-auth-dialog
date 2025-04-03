@@ -10,7 +10,7 @@ Release:	1
 License:	GPLv2+
 Group:		System/Base
 URL:		https://www.redhat.com/
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
+Source0:	https://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
 
 BuildRequires: meson
 BuildRequires: itstool
@@ -61,7 +61,7 @@ tickets are about to expire and lets them renew them.
 %{_libdir}/%{name}/plugins/libka-plugin-pam.*
 %{_libdir}/%{name}/plugins/libka-plugin-gnomelock.so
 %{_datadir}/icons/hicolor/*/status/*
-%{_datadir}/metainfo/krb5-auth-dialog.metainfo.xml
+#{_datadir}/metainfo/krb5-auth-dialog.metainfo.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.KrbAuthDialog.gschema.xml
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/krb5-auth-dialog.desktop
