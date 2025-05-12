@@ -5,12 +5,12 @@
 
 Summary:	Kerberos 5 authentication dialog
 Name:		krb5-auth-dialog
-Version:	43.0
+Version:	44.0.alpha1
 Release:	1
 License:	GPLv2+
 Group:		System/Base
 URL:		https://www.redhat.com/
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
+Source0:	https://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
 
 BuildRequires: meson
 BuildRequires: itstool
@@ -24,8 +24,9 @@ BuildRequires: pam-devel
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: pkgconfig(gconf-2.0)
-BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(gtk4)
 #BuildRequires: pkgconfig(libnm-glib)
+BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(libnotify)
 BuildRequires: pkgconfig(gcr-3)
 %if %build_heimdal
@@ -60,7 +61,7 @@ tickets are about to expire and lets them renew them.
 %{_libdir}/%{name}/plugins/libka-plugin-pam.*
 %{_libdir}/%{name}/plugins/libka-plugin-gnomelock.so
 %{_datadir}/icons/hicolor/*/status/*
-%{_datadir}/metainfo/krb5-auth-dialog.metainfo.xml
+%{_datadir}/metainfo/org.gnome.KrbAuthDialog.metainfo.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.KrbAuthDialog.gschema.xml
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/xdg/autostart/krb5-auth-dialog.desktop
